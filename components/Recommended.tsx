@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, StyleSheet, View, FlatList, ImageBackground, Platform } from 'react-native'
+import { ScrollView, StyleSheet, View, FlatList, ImageBackground, Platform, Pressable } from 'react-native'
 import { useUserContext } from '../context/user'
 import Heading from '../styles/heading'
 import SubHeading from '../styles/subheading'
@@ -12,11 +12,14 @@ import Loading from './Loading'
 
 type CategoryItem = {
     name: string,
-    image: string
+    image: string,
+    id: number,
+    navigation: any
 }
 
 
 export default function Recommended() {
+
 
     const { profileInfo } = useUserContext()
     const [data, setData] = React.useState<any>([])
@@ -26,7 +29,7 @@ export default function Recommended() {
     const navigation: any = useNavigation()
 
     React.useEffect(() => {
-        //getData()
+        getData()
     }, [profileInfo])
 
 
@@ -53,6 +56,8 @@ export default function Recommended() {
             setQuery('dinner')
         }
     }
+
+
 
     if (!data && isFetching) return <Loading />
     if (data.status === 'failure' || data.length < 1) return (
@@ -87,9 +92,9 @@ export default function Recommended() {
 
                                 }}
                                 horizontal={true}
+                                initialNumToRender={5}
                                 renderItem={({ item }) => (
-                                    <Category name={item.title} image={item.image} />
-
+                                    <Category name={item.title} image={item.image} id={item.id} navigation={navigation} />
                                 )}
                             />
 
@@ -105,8 +110,16 @@ export default function Recommended() {
 }
 
 const Category = (item: CategoryItem) => (
-    <>
-        <View style={styles.categoryWrapper}>
+
+    <View style={styles.categoryWrapper}>
+        <Pressable
+            android_ripple={{ color: '#ccc' }}
+            style={({ pressed }) => [styles.button, pressed ? styles.buttonPressed : null]}
+            onPress={() => item.navigation.navigate('MealsItem', {
+                id: item.id,
+                query: item.name
+            })}
+        >
             <View style={styles.categoryItem}>
                 <ImageBackground style={styles.image} source={{ uri: item.image }}>
 
@@ -114,9 +127,9 @@ const Category = (item: CategoryItem) => (
 
                 </ImageBackground>
             </View>
+        </Pressable>
+    </View>
 
-        </View>
-    </>
 
 )
 
@@ -167,5 +180,11 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
 
     },
-    title: { fontSize: 16, color: 'white', backgroundColor: Colors.primary, padding: 8 }
+    title: { fontSize: 16, color: 'white', backgroundColor: Colors.primary, padding: 8 },
+    button: {
+
+    },
+    buttonPressed: {
+        opacity: 0.5
+    },
 })
