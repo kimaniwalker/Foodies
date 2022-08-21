@@ -2,9 +2,17 @@ import React from 'react'
 import { Image, SafeAreaView, StyleSheet, View } from 'react-native'
 import Colors from '../utils/colors'
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Header() {
+export default function Header({ logoOnly }: { logoOnly?: boolean }) {
 
+    const [isFocused, setIsFocused] = React.useState(false)
+    const navigation: any = useNavigation()
+
+    function pressHandler() {
+        console.log('pressed')
+        navigation.navigate('Search')
+    }
 
     return (
         <>
@@ -12,8 +20,17 @@ export default function Header() {
                 <SafeAreaView>
 
                     <View style={styles.row}>
-                        <Image style={styles.image} source={require('../assets/logo3.png')} />
-                        <Ionicons style={styles.search} name="search" size={38} color={Colors.secondary} />
+
+                        {logoOnly ? (
+                            <Image style={styles.image} source={require('../assets/logo3.png')} />
+
+                        ) : (<>
+                            <Image style={styles.image} source={require('../assets/logo3.png')} />
+                            <Ionicons onPress={pressHandler} style={styles.search} name="search" size={38} color={Colors.secondary} />
+
+                        </>)}
+
+
                     </View>
                 </SafeAreaView>
             </View>

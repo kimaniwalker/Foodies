@@ -13,14 +13,9 @@ export function FavoritesWrapper({ children }) {
     const { profileInfo } = useUserContext()
     const [favorites, setFavorites] = useState([])
 
-
-
-
     useEffect(() => {
         getFavsList()
-    }, [])
-
-
+    }, [profileInfo])
 
     function removeItem(id) {
         setFavorites((currentFavorites) => currentFavorites.filter(item => item !== id))
@@ -37,12 +32,15 @@ export function FavoritesWrapper({ children }) {
     }
     async function getFavsList() {
         let favs = await getFavorites()
-        setFavorites(favs)
+        if (favs) {
+            console.log('found some favs in localstate')
+            setFavorites(favs)
+        } else {
+            console.log('couldnt find no favs, checking the db')
+            console.log(profileInfo.favorites)
+            setFavorites(profileInfo.favorites)
+        }
     }
-
-
-
-
 
     return (
         <FavoritesContext.Provider value={{ favorites, setFavorites, removeItem, addItem, clearFavories, checkIfFavorited }} >

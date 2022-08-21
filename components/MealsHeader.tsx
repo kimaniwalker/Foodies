@@ -7,8 +7,6 @@ import Colors from '../utils/colors';
 export default function MealsHeader({ navigation, route }: any) {
 
     let query = route.params.query
-    console.log(navigation)
-
 
     return (
         <>
@@ -18,15 +16,14 @@ export default function MealsHeader({ navigation, route }: any) {
                 <SafeAreaView>
                     <View style={styles.headerRow}>
                         <View style={{ marginLeft: 16, alignSelf: 'center', flex: 0 }}>
-                            <Pressable onPress={() => navigation.navigate('Categories')}>
+                            <Pressable onPress={() => navigation.goBack()}>
                                 <Ionicons name="ios-arrow-back-sharp" size={32} color="black" />
 
                             </Pressable>
 
                         </View>
                         <View style={{ justifyContent: 'center', flex: 1, paddingRight: 24 }}>
-
-                            <Heading style={{ fontSize: 24, textAlign: 'center', marginLeft: 8 }}>{query}</Heading>
+                            <Heading style={{ fontSize: 24, textAlign: 'center', marginLeft: 8, textTransform: 'uppercase' }}>{query}</Heading>
                         </View>
 
                     </View>

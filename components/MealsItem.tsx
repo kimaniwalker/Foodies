@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground, Pressable, View, Text, StyleSheet } from 'react-native'
+import { ImageBackground, Pressable, View, Text, StyleSheet, Alert } from 'react-native'
 import SubHeading from '../styles/subheading'
 import Colors from '../utils/colors'
 import { useNavigation } from '@react-navigation/native';
@@ -37,8 +37,14 @@ export default function MealsItem({ id, title, image }: { id: number, title: str
             } else {
                 addItem(id)
             }
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            Alert.alert(
+                "Something went wrong",
+                error.message,
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
         }
     }
 
@@ -52,9 +58,14 @@ export default function MealsItem({ id, title, image }: { id: number, title: str
                 .upsert({ id: profileInfo.id, favorites: favorites, updated_at: new Date() })
             await storeFavorites(favorites)
 
-            console.log(data)
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            Alert.alert(
+                "Something went wrong",
+                error.message,
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
         }
     }
 

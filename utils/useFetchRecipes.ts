@@ -1,17 +1,17 @@
+// @ts-ignore
+import { SPOONACULAR_KEY } from 'react-native-dotenv'
 
 export async function UseFetchRecipes({ query, dietary_needs, }: { query?: string, dietary_needs?: any }) {
-    const RECIPE_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&query=${query}&diet=${dietary_needs.diet}&intolerances=${dietary_needs.intolerances}&excludeIngredients=${dietary_needs.excludeIngredients}&number=10&sort=random`
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${SPOONACULAR_KEY}&query=${query}&diet=${dietary_needs?.diet}&intolerances=${dietary_needs?.intolerances}&excludeIngredients=${dietary_needs?.excludeIngredients}&number=10&sort=random`
+
 
     try {
-
         const res = await fetch(RECIPE_URL, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         })
 
         let session = await res.json()
-
-        console.log(session)
         return session
     } catch (error) {
         console.log(error)
@@ -22,7 +22,7 @@ export async function UseFetchRecipes({ query, dietary_needs, }: { query?: strin
 
 
 export async function UseGetRecipeInfo({ id }: { id: number }) {
-    const RECIPE_URL = `https://api.spoonacular.com/recipes/${id}/information?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf`
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${SPOONACULAR_KEY}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -31,14 +31,13 @@ export async function UseGetRecipeInfo({ id }: { id: number }) {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 
 
 }
 
 export async function UseGetFavoritesInfo({ ids }: { ids: string }) {
-    const RECIPE_URL = `https://api.spoonacular.com/recipes/informationBulk?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&ids=${ids}`
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/informationBulk?apiKey=${SPOONACULAR_KEY}&ids=${ids}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -47,7 +46,6 @@ export async function UseGetFavoritesInfo({ ids }: { ids: string }) {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 
 
@@ -64,7 +62,7 @@ type params = {
 
 export async function UseGetRecipeVideos(params: params) {
 
-    const RECIPE_URL = `https://api.spoonacular.com/food/videos/search?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&query=${params.query}&diet=${params.diet}&excludeIngredients=${params.excludeIngredients}&number=10`
+    const RECIPE_URL = `https://api.spoonacular.com/food/videos/search?apiKey=${SPOONACULAR_KEY}&query=${params.query}&diet=${params.diet}&excludeIngredients=${params.excludeIngredients}&number=10`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -79,7 +77,7 @@ export async function UseGetRecipeVideos(params: params) {
 }
 
 export async function useGetRandomJoke() {
-    const RECIPE_URL = `https://api.spoonacular.com/food/jokes/random?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf`
+    const RECIPE_URL = `https://api.spoonacular.com/food/jokes/random?apiKey=${SPOONACULAR_KEY}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -93,7 +91,7 @@ export async function useGetRandomJoke() {
 }
 
 export async function useGetRandomTrivia() {
-    const RECIPE_URL = `https://api.spoonacular.com/food/trivia/random?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf`
+    const RECIPE_URL = `https://api.spoonacular.com/food/trivia/random?apiKey=${SPOONACULAR_KEY}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -106,7 +104,7 @@ export async function useGetRandomTrivia() {
     return session
 }
 export async function useGetRandomRecipes(tags: string) {
-    const RECIPE_URL = `https://api.spoonacular.com/recipes/random?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&number=10&tags=${tags}`
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/random?apiKey=${SPOONACULAR_KEY}&number=10&tags=${tags}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -123,7 +121,7 @@ type chatBotParams = {
     contextId: string
 }
 export async function useTalkToBot(params: chatBotParams) {
-    const RECIPE_URL = `https://api.spoonacular.com/food/converse?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&text=${params.text}&contextId=${params.contextId}`
+    const RECIPE_URL = `https://api.spoonacular.com/food/converse?apiKey=${SPOONACULAR_KEY}&text=${params.text}&contextId=${params.contextId}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -144,7 +142,7 @@ type cardParams = {
     fontColor: string,
 }
 export async function useGetRecipeCard(params: cardParams) {
-    const RECIPE_URL = `https://api.spoonacular.com/recipes/${params.id}/card?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&mask=${params.mask}&backgroundImage=${params.backgroundImage}&backgroundColor=${params.backgroundColor}&fontColor=${params.fontColor}`
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/${params.id}/card?apiKey=${SPOONACULAR_KEY}&mask=${params.mask}&backgroundImage=${params.backgroundImage}&backgroundColor=${params.backgroundColor}&fontColor=${params.fontColor}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -158,7 +156,7 @@ export async function useGetRecipeCard(params: cardParams) {
 }
 
 export async function useGetSimilarRecipes(id: number) {
-    const RECIPE_URL = `https://api.spoonacular.com/recipes/${id}/similar?apiKey=c92e95d4b12a4e6d9cbecdfc523e66cf&number=5`
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/${id}/similar?apiKey=${SPOONACULAR_KEY}&number=5`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',
@@ -170,5 +168,25 @@ export async function useGetSimilarRecipes(id: number) {
     console.log(session)
     return session
 }
+
+
+export async function useSearchAutoComplete(query: string) {
+    const RECIPE_URL = `https://api.spoonacular.com/recipes/autocomplete?apiKey=${SPOONACULAR_KEY}&query=${query}&number=10`
+
+
+    const res = await fetch(RECIPE_URL, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+
+    })
+
+    let session = await res.json()
+
+    console.log(session)
+    return session
+
+
+}
+
 
 

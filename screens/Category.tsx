@@ -1,13 +1,13 @@
 import React from 'react'
 import { FlatList, View, StyleSheet } from 'react-native'
 import CategoryItem from '../components/CategoryItem'
+import Header from '../components/Header'
 import Categories from '../data/categories.json'
 
 
 export default function CategoryScreen({ navigation }: { navigation: any }) {
 
     function pressHandler(itemData: any) {
-        console.log('test')
         navigation.navigate('Meals', {
             query: itemData.item.name
         })
@@ -19,7 +19,7 @@ export default function CategoryScreen({ navigation }: { navigation: any }) {
 
     return (
         <>
-
+            <Header />
             <View style={styles.container}>
                 <FlatList data={Categories}
                     keyExtractor={(item) => item.id}
@@ -42,7 +42,6 @@ export default function CategoryScreen({ navigation }: { navigation: any }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 30
     }
 
 })

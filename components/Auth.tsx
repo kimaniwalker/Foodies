@@ -7,9 +7,11 @@ import Avatar from './Avatar'
 import Button from '../styles/button'
 import Heading from '../styles/heading'
 import { useUserContext } from '../context/user'
+import { useNavigation } from '@react-navigation/native';
+import { getUser, storeUser } from '../utils/localStorage'
 
 
-export default function Auth() {
+export default function Auth({ setIsAuthenticated }: any) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -17,17 +19,10 @@ export default function Auth() {
     const [focused, setFocused] = useState(false)
 
 
-
     React.useEffect(() => {
         checkLogin()
-    }, [])
+    }, [user])
 
-    function checkLogin() {
-        if (user) {
-            console.log(user)
-            //setIsAuthenticated(true)
-        }
-    }
 
     async function signInWithEmail() {
 
@@ -36,6 +31,10 @@ export default function Auth() {
             password: password,
         })
 
+        if (user) {
+            await storeUser(user)
+            setIsAuthenticated(true)
+        }
         if (error) Alert.alert(error.message)
 
     }
@@ -47,7 +46,6 @@ export default function Auth() {
             email: email,
             password: password,
         })
-        console.log(user)
 
         if (user) {
             const { data, error } = await supabase
@@ -55,12 +53,23 @@ export default function Auth() {
                 .insert([
                     { id: user.id, username: user.email }
                 ])
-            console.log(data)
             if (error) Alert.alert(error.message)
         }
 
         if (error) Alert.alert(error.message)
         setLoading(false)
+    }
+
+    async function checkLogin() {
+
+        if (user) {
+            setIsAuthenticated(true)
+        } else {
+            let currentUser = await getUser()
+            if (currentUser) {
+                setIsAuthenticated(true)
+            }
+        }
     }
 
 

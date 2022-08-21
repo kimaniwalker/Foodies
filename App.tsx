@@ -19,18 +19,22 @@ import FavoritesScreen from './screens/Favorites';
 import ExploreScreen from './screens/Explore';
 import { supabase } from './utils/supabase';
 import 'react-native-url-polyfill/auto'
+import SearchScreen from './screens/Search';
 
 export default function App() {
 
   const user = supabase.auth.user()
   const [isAuthenticated, setIsAuthenticated] = React.useState(false)
 
-
   React.useEffect(() => {
-    if (user) {
-      setIsAuthenticated(true)
-    }
-  }, [user])
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event == 'SIGNED_OUT') {
+        setIsAuthenticated(false)
+      }
+    })
+
+  }, [])
+
 
   let [fontsLoaded] = useFonts({
     'montserratBold': Montserrat_700Bold,
@@ -66,7 +70,7 @@ export default function App() {
           name="Explore" component={ExploreScreen} />
         <Tab.Screen
           options={{
-            headerShown: true,
+            headerShown: false,
             tabBarIcon: ({ }) => (<MaterialCommunityIcons name="format-list-group" size={24} color={Colors.dark} />),
           }} name="Categories" component={CategoryScreen} />
 
@@ -76,6 +80,10 @@ export default function App() {
 
             tabBarIcon: ({ }) => (<Ionicons name="heart-outline" size={24} color={Colors.dark} />),
           }} name="Favorites" component={FavoritesScreen} />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({ }) => (<Ionicons name="search" size={24} color={Colors.dark} />),
+          }} name="Search" component={SearchScreen} />
         <Tab.Screen
           options={{
 
@@ -113,7 +121,7 @@ export default function App() {
     return (
       <NavigationContainer>
         {isAuthenticated && (<AuthenticatedRoutes />)}
-        {!isAuthenticated && (<AuthScreen />)}
+        {!isAuthenticated && (<AuthScreen setIsAuthenticated={setIsAuthenticated} />)}
       </NavigationContainer>
     )
   }

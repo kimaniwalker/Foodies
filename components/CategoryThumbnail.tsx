@@ -36,7 +36,7 @@ export default function CategoryThumbnail() {
                             <Category name='breakfast' id={102} image={CategoryImages.breakfast} />
                             <Category name='lunch' id={103} image={CategoryImages.lunch} />
                             <Category name='dinner' id={104} image={CategoryImages.dinner} />
-                            <Category name='desert' id={105} image={CategoryImages.desert} />
+                            <Category name='dessert' id={105} image={CategoryImages.desert} />
                             <Category name='drinks' id={106} image={CategoryImages.drink} />
                             <Category name='finger foods' id={107} image={CategoryImages.fingerfood} />
                             <Category name='salad' id={108} image={CategoryImages.salad} />
@@ -64,7 +64,6 @@ const Category = (item: ItemCategory) => {
     const navigation: any = useNavigation()
 
     function pressHandler() {
-        console.log('test')
         navigation.navigate('Meals', {
             query: item.name
         })
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
         borderColor: '#ccc'
     },
     button: {
-        flex: 1
+
     },
     buttonPressed: {
         opacity: 0.5

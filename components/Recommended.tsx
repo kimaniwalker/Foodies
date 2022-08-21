@@ -1,43 +1,45 @@
-import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { ScrollView, StyleSheet, View, FlatList, ImageBackground, Platform } from 'react-native'
 import { useUserContext } from '../context/user'
-import Container from '../styles/container'
 import Heading from '../styles/heading'
 import SubHeading from '../styles/subheading'
 import Colors from '../utils/colors'
 import Button from '../styles/button'
 import { UseFetchRecipes } from '../utils/useFetchRecipes'
 import { useNavigation } from '@react-navigation/native';
+import Loading from './Loading'
 
 
 type CategoryItem = {
     name: string,
     image: string
 }
+
+
 export default function Recommended() {
 
-    const [data, setData] = React.useState([])
-    const [query, setQuery] = React.useState('')
     const { profileInfo } = useUserContext()
+    const [data, setData] = React.useState<any>([])
+    const [query, setQuery] = React.useState('')
+    const [isFetching, setIsFetching] = React.useState(false)
     const currentDate = new Date();
     const navigation: any = useNavigation()
 
     React.useEffect(() => {
-        if (profileInfo) {
-            getData()
-        }
-
+        //getData()
     }, [profileInfo])
 
 
     async function getData() {
+        setIsFetching(true)
         getTimeOfDay()
         let data = await UseFetchRecipes({
             query: query,
             dietary_needs: profileInfo.dietary_needs
         })
-        setData(data.results)
+        setData(data)
+        setIsFetching(false)
+
     }
 
     function getTimeOfDay() {
@@ -52,6 +54,19 @@ export default function Recommended() {
         }
     }
 
+    if (!data && isFetching) return <Loading />
+    if (data.status === 'failure' || data.length < 1) return (
+        <View style={styles.wrapper}>
+            <View style={styles.titleRow}>
+                <Heading style={{ fontSize: 24 }}>Recommended</Heading>
+                <Button style={{ width: 100, height: 25, marginTop: 0 }} disabled={true} onPress={() => navigation.navigate('Categories')}>View All</Button>
+            </View>
+            <View style={styles.categoryRow}>
+
+                <SubHeading style={{ padding: 16, color: Colors.error }}>Something wen't wrong. I couldn't find any recipes, i'll try again later</SubHeading>
+            </View>
+        </View>
+    )
     return (
         <>
 
@@ -65,7 +80,7 @@ export default function Recommended() {
                     <ScrollView>
                         <View style={styles.categoryRow}>
                             <FlatList
-                                data={data}
+                                data={data.results}
                                 keyExtractor={(item: any) => item.id}
                                 //ItemSeparatorComponent={() => <View style={styles.separator} />}
                                 onEndReached={() => {

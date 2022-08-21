@@ -1,16 +1,17 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, Alert } from 'react-native'
 import Loading from '../components/Loading'
 import MealsItem from '../components/MealsItem'
 import { useFavoritesContext } from '../context/favorites'
 import { useUserContext } from '../context/user'
 import Container from '../styles/container'
+import SubHeading from '../styles/subheading'
 import { UseGetFavoritesInfo } from '../utils/useFetchRecipes'
 
 export default function Favorites() {
 
     const { favorites } = useFavoritesContext()
-    const [favData, setFavData] = React.useState([])
+    const [favData, setFavData] = React.useState<any>([])
 
     React.useEffect(() => {
         getData()
@@ -18,8 +19,17 @@ export default function Favorites() {
 
     async function getData() {
         let data = await UseGetFavoritesInfo({ ids: favorites })
-        console.log('mydata' + data)
         setFavData(data)
+
+        if (data.status === 'failure') {
+            Alert.alert(
+                "Something went wrong",
+                data.message,
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
+        }
     }
 
     if (!favData) return <Loading />

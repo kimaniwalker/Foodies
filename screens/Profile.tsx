@@ -9,10 +9,10 @@ import { useUserContext } from '../context/user'
 import Wrapper from '../styles/wrapper'
 import Container from '../styles/container'
 
-export default function Profile() {
+export default function Profile({ navigation }: any) {
 
 
-    const { setIsAuthenticated, profileInfo } = useUserContext()
+    const { profileInfo } = useUserContext()
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
@@ -32,7 +32,7 @@ export default function Profile() {
             <Container style={{ padding: 16 }}>
 
 
-                <Account profileInfo={profileInfo} setIsAuthenticated={setIsAuthenticated} />
+                <Account profileInfo={profileInfo} />
 
             </Container>
 

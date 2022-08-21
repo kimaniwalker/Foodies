@@ -5,10 +5,13 @@ import Header from '../components/Header'
 import RandomRecipes from '../components/RandomRecipes'
 import Recommended from '../components/Recommended'
 import Videos from '../components/Videos'
+import { useUserContext } from '../context/user'
 
 type ExploreProps = {
 
 }
+
+
 
 export default function ExploreScreen(props: ExploreProps) {
 

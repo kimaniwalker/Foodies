@@ -3,16 +3,20 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import Container from '../styles/container'
 import Heading from '../styles/heading'
 import SubHeading from '../styles/subheading'
-
+import { UseGetRecipeVideos } from '../utils/useFetchRecipes'
+import VideoItem from './VideoItem'
+import Button from '../styles/button'
+import { useNavigation } from '@react-navigation/native';
+import Colors from '../utils/colors'
 
 
 type CategoryItem = {
-    id: number,
-    name: string,
-    icon: string,
-    backgroundColor: string
+    youtubeId: string
 }
 export default function Videos() {
+
+    const [data, setData] = React.useState([])
+    const navigation: any = useNavigation()
 
 
     return (
@@ -21,16 +25,16 @@ export default function Videos() {
             <View style={styles.wrapper}>
                 <View style={styles.titleRow}>
                     <Heading style={{ fontSize: 24 }}>Featured Videos</Heading>
-                    <Heading style={{ fontSize: 14 }}>Subscribe</Heading>
+                    <Button style={{ width: 100, height: 25, marginTop: 0 }} disabled={true} onPress={() => navigation.navigate('Categories')}>Subscribe</Button>
                 </View>
 
                 <View>
                     <ScrollView horizontal={true} >
                         <View style={styles.categoryRow}>
-                            <Category name='BURGERS' id={102} backgroundColor='red' icon="red" />
-                            <Category name='BURGERS' id={102} backgroundColor='red' icon="red" />
-                            <Category name='BURGERS' id={102} backgroundColor='red' icon="red" />
-                            <Category name='BURGERS' id={102} backgroundColor='red' icon="red" />
+                            <VideoItem />
+                            <VideoItem />
+                            <VideoItem />
+                            <VideoItem />
                         </View>
                     </ScrollView>
                 </View>
@@ -50,7 +54,7 @@ const Category = (item: CategoryItem) => (
             <View style={styles.categoryItem}>
 
             </View>
-            <SubHeading>{item.name}</SubHeading>
+
 
         </View>
     </>

@@ -2,6 +2,11 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../utils/supabase';
 import 'react-native-url-polyfill/auto'
+import * as SplashScreen from 'expo-splash-screen';
+
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 
 const UserContext = createContext();
@@ -11,12 +16,11 @@ export function UserWrapper({ children }) {
 
     const user = supabase.auth.user()
     const session = supabase.auth.session()
-    const [err, setErr] = useState("")
-    const [userInfo, setUserInfo] = useState([])
-    const [sessionInfo, setSessionInfo] = useState([])
+
     const [profileInfo, setProfileInfo] = useState([])
     const [isFetching, setIsFetching] = useState()
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [err, setErr] = useState("")
+
 
 
 
@@ -26,28 +30,17 @@ export function UserWrapper({ children }) {
             fetchUser()
         })
         fetchUser()
-
     }, [user, session])
 
     const fetchUser = async () => {
-        setIsFetching(true)
-        setIsAuthenticated(false)
-        getProfileData()
 
         try {
-            if (user) {
-                setIsAuthenticated(true)
-                setUserInfo(user)
-                setSessionInfo(session)
-            }
-
+            await getProfileData()
+            SplashScreen.hideAsync()
         } catch (e) {
             // error reading value
             setErr(e)
         }
-
-        setIsFetching(false)
-
     }
 
     const getProfileData = async () => {
@@ -79,7 +72,7 @@ export function UserWrapper({ children }) {
 
 
     return (
-        <UserContext.Provider value={{ user, userInfo, isAuthenticated, errMsg: err, isFetching, setIsAuthenticated, profileInfo, sessionInfo }} >
+        <UserContext.Provider value={{ user, session, errMsg: err, isFetching, profileInfo }} >
             {children}
         </UserContext.Provider>
     );

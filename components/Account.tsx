@@ -6,9 +6,11 @@ import Heading from "../styles/heading";
 import SubHeading from "../styles/subheading";
 import Colors from "../utils/colors";
 import Loading from "./Loading";
+import { removeItem } from "../utils/localStorage";
 
 
-export default function Account({ profileInfo, setIsAuthenticated }: { profileInfo: any, setIsAuthenticated: any }) {
+
+export default function Account({ profileInfo }: { profileInfo: any }) {
 
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
@@ -18,13 +20,14 @@ export default function Account({ profileInfo, setIsAuthenticated }: { profileIn
     const [dietary_needs, setDietaryNeeds] = useState({});
     const [avatar_url, setAvatarUrl] = useState("");
     const [focused, setFocused] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(true)
 
     useEffect(() => {
         if (profileInfo) {
             setLoading(true)
-            setIntolerances(profileInfo.dietary_needs.intolerances)
-            setDiet(profileInfo.dietary_needs.diet)
-            setExcluded(profileInfo.dietary_needs.excluded)
+            setIntolerances(profileInfo?.dietary_needs.intolerances)
+            setDiet(profileInfo?.dietary_needs.diet)
+            setExcluded(profileInfo?.dietary_needs.excluded)
             setLoading(false)
         }
     }, [profileInfo])
@@ -62,8 +65,14 @@ export default function Account({ profileInfo, setIsAuthenticated }: { profileIn
             if (error) {
                 throw error;
             }
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            Alert.alert(
+                "Something went wrong",
+                error.message,
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
         } finally {
             setLoading(false);
         }
@@ -165,6 +174,8 @@ export default function Account({ profileInfo, setIsAuthenticated }: { profileIn
                     style={{ width: '50%', marginTop: 0 }}
                     disabled={loading} onPress={() => {
                         supabase.auth.signOut()
+                        removeItem('user')
+                        removeItem('favorites')
                         setIsAuthenticated(false)
                     }}>Sign Out</Button>
             </View>
