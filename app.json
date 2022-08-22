@@ -4,10 +4,10 @@
     "slug": "Foodies",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo3.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splashanimation.gif",
+      "image": "./assets/splashLogo.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.key2design.foodies"
     },
     "android": {
       "adaptiveIcon": {

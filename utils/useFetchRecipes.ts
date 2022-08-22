@@ -14,7 +14,7 @@ export async function UseFetchRecipes({ query, dietary_needs, }: { query?: strin
         let session = await res.json()
         return session
     } catch (error) {
-        console.log(error)
+
     }
 
 }
@@ -71,7 +71,6 @@ export async function UseGetRecipeVideos(params: params) {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 
 }
@@ -86,7 +85,7 @@ export async function useGetRandomJoke() {
 
     let session = await res.json()
 
-    console.log(session)
+
     return session
 }
 
@@ -100,7 +99,6 @@ export async function useGetRandomTrivia() {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 }
 export async function useGetRandomRecipes(tags: string) {
@@ -113,7 +111,6 @@ export async function useGetRandomRecipes(tags: string) {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 }
 type chatBotParams = {
@@ -130,7 +127,7 @@ export async function useTalkToBot(params: chatBotParams) {
 
     let session = await res.json()
 
-    console.log(session)
+
     return session
 }
 
@@ -151,7 +148,6 @@ export async function useGetRecipeCard(params: cardParams) {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 }
 
@@ -165,7 +161,6 @@ export async function useGetSimilarRecipes(id: number) {
 
     let session = await res.json()
 
-    console.log(session)
     return session
 }
 
@@ -182,7 +177,7 @@ export async function useSearchAutoComplete(query: string) {
 
     let session = await res.json()
 
-    console.log(session)
+
     return session
 
 

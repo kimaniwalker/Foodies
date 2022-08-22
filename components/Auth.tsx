@@ -62,7 +62,7 @@ export default function Auth({ setIsAuthenticated }: any) {
     async function checkLogin() {
 
         if (user && session) {
-            console.log(session)
+
             setIsAuthenticated(true)
         }
     }

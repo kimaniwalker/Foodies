@@ -42,7 +42,7 @@ export default function MealsItem({ id, title, image }: { id: number, title: str
                 "Something went wrong",
                 error.message,
                 [
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                    { text: "OK" }
                 ]
             );
         }
@@ -63,7 +63,7 @@ export default function MealsItem({ id, title, image }: { id: number, title: str
                 "Something went wrong",
                 error.message,
                 [
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                    { text: "OK" }
                 ]
             );
         }

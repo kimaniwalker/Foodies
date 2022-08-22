@@ -10,7 +10,7 @@ export default function Header({ logoOnly }: { logoOnly?: boolean }) {
     const navigation: any = useNavigation()
 
     function pressHandler() {
-        console.log('pressed')
+
         navigation.navigate('Search')
     }
 

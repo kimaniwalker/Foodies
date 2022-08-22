@@ -35,7 +35,7 @@ export default function SearchScreen() {
                     "Something went wrong",
                     data.message,
                     [
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                        { text: "OK" }
                     ]
                 );
             }
@@ -65,7 +65,7 @@ export default function SearchScreen() {
                     value={value}
                     placeholder="What do you want to cook today ?"
                     autoCapitalize={'none'}
-                    onEndEditing={() => console.log('test')}
+
                 />
                 <InfiniteHits isFetching={isFetching} hits={data} />
             </View>

@@ -43,7 +43,6 @@ export function UserWrapper({ children }) {
                 .select()
                 .eq("id", user.id)
                 .single();
-            console.log('checking the db for profileInfo')
             setProfileInfo(data)
             if (error && status !== 406) {
                 throw error;

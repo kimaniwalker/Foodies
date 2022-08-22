@@ -70,7 +70,7 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                 "Something went wrong",
                 error.message,
                 [
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                    { text: "OK" }
                 ]
             );
         } finally {

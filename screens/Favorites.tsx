@@ -26,7 +26,7 @@ export default function Favorites() {
                 "Something went wrong",
                 data.message,
                 [
-                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                    { text: "OK" }
                 ]
             );
         }

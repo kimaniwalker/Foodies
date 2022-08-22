@@ -5,7 +5,7 @@ export async function storeFavorites(value: any) {
         const jsonValue = JSON.stringify(value)
         await AsyncStorage.setItem('favorites', jsonValue)
     } catch (e) {
-        console.log(e)
+
         // saving error
     }
 }
@@ -19,8 +19,7 @@ export async function removeItem(value: string) {
 export async function getFavorites() {
 
     const jsonValue = await AsyncStorage.getItem('favorites')
-    console.log('checking for favorites')
-    console.log(jsonValue)
+
 
     if (jsonValue != null) {
         let favorites = JSON.parse(jsonValue)
@@ -33,7 +32,7 @@ export async function storeUser(value: any) {
         const jsonValue = JSON.stringify(value)
         await AsyncStorage.setItem('user', jsonValue)
     } catch (e) {
-        console.log(e)
+
         // saving error
     }
 }
@@ -43,8 +42,7 @@ export async function storeUser(value: any) {
 export async function getUser() {
 
     const jsonValue = await AsyncStorage.getItem('user')
-    console.log('looking for user')
-    console.log(jsonValue)
+
 
     if (jsonValue != null) {
         let user = JSON.parse(jsonValue)
