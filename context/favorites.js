@@ -35,8 +35,9 @@ export function FavoritesWrapper({ children }) {
         if (favs) {
             console.log('found some favs in localstate')
             setFavorites(favs)
-        } else {
+        } else if (profileInfo) {
             console.log('couldnt find no favs, checking the db')
+            console.log(profileInfo)
             console.log(profileInfo.favorites)
             setFavorites(profileInfo.favorites)
         }

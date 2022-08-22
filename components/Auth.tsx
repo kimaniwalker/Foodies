@@ -15,7 +15,7 @@ export default function Auth({ setIsAuthenticated }: any) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const { isFetching, user } = useUserContext()
+    const { isFetching, user, session } = useUserContext()
     const [focused, setFocused] = useState(false)
 
 
@@ -55,20 +55,15 @@ export default function Auth({ setIsAuthenticated }: any) {
                 ])
             if (error) Alert.alert(error.message)
         }
-
         if (error) Alert.alert(error.message)
         setLoading(false)
     }
 
     async function checkLogin() {
 
-        if (user) {
+        if (user && session) {
+            console.log(session)
             setIsAuthenticated(true)
-        } else {
-            let currentUser = await getUser()
-            if (currentUser) {
-                setIsAuthenticated(true)
-            }
         }
     }
 
